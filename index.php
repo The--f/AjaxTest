@@ -37,6 +37,25 @@ and open the template in the editor.
         xmlhttp.open("post","form_action_xml.php" ,true);
         xmlhttp.send();
 }
+function check_login() 
+{
+    $.ajax({
+        type: 'POST',
+        url: 'login.php',
+        data: 'email=' + $('input[value="email"]').val() + '&password=' + $('input[value="password"]').val(),
+        success: function(response){
+            if(response === '1') {
+                alert('Log In Success');
+            }
+            else if(response === '2') {
+                alert('Incorrect Details');
+            }
+            else if(response === '3') {
+                alert('Fill In All Fields');
+            }
+        }
+    });
+}
     </script>
   </head>
   <body>
@@ -76,11 +95,11 @@ and open the template in the editor.
                           </button>
                       </div>
                       <div class="container span3 right" id="formeediv">
-                          <form class="form-signin">
+                          <form class="form-signin"  method ="POST" name ="login">
                               <h2 class="form-signin-heading">Please sign in</h2>
-                              <input type="text" class="input-block-level" placeholder="Email address">
-                              <input type="password" class="input-block-level" placeholder="Password">
-                              <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+                              <input type="text" class="input-block-level" placeholder="Email address" name="email">
+                              <input type="password" class="input-block-level" placeholder="Password" name="password">
+                              <button class="btn btn-large btn-primary" type="submit" onclick="check_login()">Sign in</button>
                           </form>
                       </div>
                   </div>

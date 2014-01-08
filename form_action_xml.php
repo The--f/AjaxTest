@@ -42,7 +42,7 @@ foreach ($data as $row) {
     $nameText = $dom->createTextNode($row['name']);
     $name->appendChild($nameText);
     $last_name = $dom->createElement('td');
-    $last_name_text = $dom->createTextNode($row['last_name']);
+    $last_name_text = $dom->createTextNode($row['prenom']);
     $last_name->appendChild($last_name_text);
     $user = $dom->createElement('tr');
     $user->appendChild($id);
