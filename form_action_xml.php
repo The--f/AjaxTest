@@ -1,5 +1,4 @@
 <?php
-
 try {
     $dbh = new PDO('mysql:host=localhost;dbname=ajax', 'root', '');
 } catch (PDOException $e) {
@@ -8,10 +7,10 @@ try {
 }
 try {
     $data = $dbh->query('select * from users ');
-    foreach ($data as $row) {
-        print_r($row);
-        echo '<br>';
-    }
+//    foreach ($data as $row) {
+//        print_r($row);
+//        echo '<br>';
+//    }
 } catch (Exception $ex) {
     echo 'ERROR: ' . $e->getMessage();
 }
@@ -25,7 +24,7 @@ $dom->appendChild($users);
     $id->appendChild($idText);
     $name = $dom->createElement('name');
     $nameText = $dom->createTextNode($row['name']);
-    $title->appendChild($titleText);
+    $name->appendChild($nameText);
     $last_name = $dom->createElement('last_name');
     $last_name_text = $dom->createTextNode($row['last_name']);
     $last_name->appendChild($last_name_text);
@@ -35,9 +34,8 @@ $dom->appendChild($users);
     $user->appendChild($last_name);
     $users->appendChild($user);
 }
-
 $xmlString = $dom->saveXML();
-
+header("Content-Type:text/xml");
 echo $xmlString;
 
 
