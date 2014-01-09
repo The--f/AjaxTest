@@ -11,11 +11,14 @@ and open the template in the editor.
     <link href="./dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="./dist/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     <link href="./dist/css/styles.css" rel="stylesheet" media="screen">
-     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="./dist/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="./js/jquery/jquery-2.0.3.min.js"></script>
+    <script src="./dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" >
     function loadHTMLDoc()
     {
@@ -57,19 +60,19 @@ and open the template in the editor.
             xmlhttp.open("post", "form_action_xml.php", true);
             xmlhttp.send();
         }
-    function check_login() {
-            $.ajax({
+  $('document').ready(function(){
+      $('#vform').submit(function(){
+          $.ajax({
                 type: 'POST',
                 async: 'true',
                 url: 'login.php',
                 data: {
-                    'email': $('#email').val(),
-                    'password': $('input[value="password"]').val()
+                    name: $('#name').val(),
+                    password: $('#password').val()
                 },
                 success: function(response) {
-
+                    alert(response);
                     if (response == '1') {
-                        alert('here');
                         alert('Log In Success');
                     }
                     else if (response == '2') {
@@ -77,10 +80,12 @@ and open the template in the editor.
                     }
                     else if (response == '3') {
                         alert('Fill In All Fields');
-                    }
-                }
-            });
-        }
+                          }
+                      }
+                  });
+                  return false ;
+              });
+    });
     </script>
   </head>
   <body>
@@ -138,11 +143,11 @@ and open the template in the editor.
                           </button>
                         </div>-->
                       <div class="container span3 right"  id="formeediv">
-                          <form class="form-signin"  method="POST" name ="login">
+                          <form class="form-signin" id="vform"  method="POST" name ="login">
                               <h2 class="form-signin-heading">Please sign in</h2>
-                              <input type="text" class="input-block-level" id="email" placeholder="Email address" name="email">
+                              <input type="text" class="input-block-level" id="name" placeholder="Enter your name" name="name">
                               <input type="password" class="input-block-level" id="password" placeholder="Password" name="password">
-                              <button class="btn btn-large btn-primary"  onclick="check_login()">Sign in</button>
+                              <button class="btn btn-large btn-primary"  type="submit" value="submit" >Sign in</button>
                           </form>
                       </div>
                   </div>
@@ -150,7 +155,5 @@ and open the template in the editor.
           </div>
           <div class="span2"></div>
       </div>
-      <script src="./js/jquery/jquery-1.10.2.min.js"></script>
-      <script src="./dist/js/bootstrap.min.js"></script>
   </body>
 </html>
