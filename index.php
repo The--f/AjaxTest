@@ -34,10 +34,10 @@ and open the template in the editor.
                 document.getElementById("paneldiv").setAttribute('class',"panel panel-success" );
             }
         };
-        xmlhttp.open("post","form_action_xml.php" ,true);
+        xmlhttp.open("post","form_action_html_response.php" ,true);
         xmlhttp.send();
 }
-function check_login() 
+function check_login()
 {
     $.ajax({
         type: 'POST',
@@ -71,11 +71,8 @@ function check_login()
                           </button>
                       </div>
                       <div class="container span5 right" id="progressdiv"> </div>
-                      <div class="container span5 right" id="tablediv">
-                          <table>
-                              <tr><th></th></tr>
-                          </table>
-                          <table class="table">
+                      <div class="container span5 right" >
+                          <table class="table" id="tablediv">
 
                           </table>
                       </div>
@@ -91,7 +88,7 @@ function check_login()
                   <div class="panel-body">
                       <div class="span2 left">
                           <button  type="button" class="btn btn-default btn-sm" onclick="loadXMLDoc();">
-                              <span class="glyphicon glyphicon-user"></span><h4>List of  all users</h4>
+                              <span class="glyphicon glyphicon-log-in"></span><h4>List of  all users</h4>
                           </button>
                       </div>
                       <div class="container span3 right" id="formeediv">
