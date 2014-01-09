@@ -7,18 +7,13 @@ try {
 }
 try {
     $data = $dbh->query('select * from users ');
-//    foreach ($data as $row) {
-//        print_r($row);
-//        echo '<br>';
-//    }
 } catch (Exception $ex) {
     echo 'ERROR: ' . $e->getMessage();
 }
 $dbh = null;
 $dom = new DOMDocument();
-$users = $dom->createElement('table');
+$users = $dom->createElement('users');
 $dom->appendChild($users);
-// end table header start content
 foreach ($data as $row) {
     $id = $dom->createElement('id');
     $idText = $dom->createTextNode($row['id']);
