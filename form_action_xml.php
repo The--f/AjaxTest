@@ -33,6 +33,3 @@ foreach ($data as $row) {
 $xmlString = $dom->saveXML();
 header("Content-Type:text/xml");
 echo $xmlString;
-
-
-

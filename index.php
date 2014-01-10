@@ -22,24 +22,24 @@ and open the template in the editor.
     <script type="text/javascript" >
     function loadHTMLDoc()
     {
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp=new XMLHttpRequest();
-        }
-    else
-        {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange=function(){
-            if (xmlhttp.readyState===4 && xmlhttp.status===200){
-                document.getElementById("tablediv").innerHTML=xmlhttp.responseText;
-                document.getElementById("panel1div").setAttribute('class',"panel panel-success" );
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+            {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp=new XMLHttpRequest();
             }
-        };
-        xmlhttp.open("post","form_action_html_response.php" ,true);
-        xmlhttp.send();
-}
+        else
+            {// code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function(){
+                if (xmlhttp.readyState===4 && xmlhttp.status===200){
+                    document.getElementById("tablediv").innerHTML=xmlhttp.responseText;
+                    document.getElementById("panel1div").setAttribute('class',"panel panel-success" );
+                }
+            };
+            xmlhttp.open("post","form_action_html_response.php" ,true);
+            xmlhttp.send();
+            }
     function loadXMLDoc(){
         var xmlhttp;
         if (window.XMLHttpRequest){
@@ -60,8 +60,27 @@ and open the template in the editor.
             xmlhttp.open("post", "form_action_xml.php", true);
             xmlhttp.send();
         }
+            /**  State  Description
+                0      The request is not initialized
+                1      The request has been set up
+                2      The request has been sent
+                3      The request is in process
+                4      The request is complete
+             * */
+
+
+
+
   $('document').ready(function(){
+      $('.btn').button();
+//      $('#vform').change(function (){
       $('#vform').submit(function(){
+          $('#subbutn').html("<div class=\"progress progress-striped active\">"+
+                  "<div class=\"progress-bar\"  role=\"progressbar\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 100%\">"+
+                "</div></div>");
+        
+
+
           $.ajax({
                 type: 'POST',
                 async: 'true',
@@ -71,17 +90,29 @@ and open the template in the editor.
                     password: $('#password').val()
                 },
                 success: function(response) {
-                    alert(response);
                     if (response == '1') {
-                        alert('Log In Success');
+                        $('#login_heading').html("<h3> Access Granted<h3>");
+                        document.getElementById("panel3div").setAttribute('class',"panel panel-success" );
+                        setTimeout(function() {
+                            $('#formeediv').html("<h1> WELCOME </h1>");
+                                 }, 3000);
                     }
                     else if (response == '2') {
-                        alert('Incorrect Details');
+                        $('#login_heading').html("<h3> Name Or password False try again <h3>");
+                         document.getElementById("panel3div").setAttribute('class',"panel panel-warning" );
+                         $('#name').focus();
+                          $('#subbutn').html("Sign In");
                     }
                     else if (response == '3') {
-                        alert('Fill In All Fields');
+                         $('#vform').addClass('.has-error');
+                         $('#name').addClass('has-error');
+                         $('#password').addClass('has-error');
+                         $('#login_heading').html("<h3> All inputs are required<h3>");
+                         document.getElementById("panel3div").setAttribute('class',"panel panel-danger" );
+                          $('#subbutn').html("Sign In");
                           }
-                      }
+                      },
+                      error: function(){ alert('AJAX ERROR');}
                   });
                   return false ;
               });
@@ -135,19 +166,16 @@ and open the template in the editor.
           <div class="span1"></div>
           <div class="span8">
               <div class="panel panel-primary" id="panel3div">
-                  <div class="panel-heading"><h3>Simple Form sign in </h3></div>
+                  <div class="panel-heading" id="login_heading"><h3>Simple Form sign in </h3></div>
                   <div class="panel-body">
-                      <!--                      <div class="span2 left">
-                                                <button  type="button" class="btn btn-default btn-sm" onclick="loadXMLDoc();">
-                              <span class="glyphicon glyphicon-log-in"></span><h4>List of  all users</h4>
-                          </button>
-                        </div>-->
                       <div class="container span3 right"  id="formeediv">
-                          <form class="form-signin" id="vform"  method="POST" name ="login">
+                          <form class="form-signin form-group" id="vform"  method="POST" name ="login">
                               <h2 class="form-signin-heading">Please sign in</h2>
-                              <input type="text" class="input-block-level" id="name" placeholder="Enter your name" name="name">
-                              <input type="password" class="input-block-level" id="password" placeholder="Password" name="password">
-                              <button class="btn btn-large btn-primary"  type="submit" value="submit" >Sign in</button>
+                              <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name"><br>
+                              <input type="password" class="form-control" id="password" placeholder="Password" name="password"><br>
+                              <button class="btn-block btn btn-primary btn-loading" id="subbutn" type="submit" value="submit" >
+                                  Sign In</button>
+                              <!--Sign in</button>-->
                           </form>
                       </div>
                   </div>
